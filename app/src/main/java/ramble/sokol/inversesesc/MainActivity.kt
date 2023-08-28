@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ramcosta.composedestinations.DestinationsNavHost
+import ramble.sokol.inversesesc.authentication_and_splash.view.screens.NavGraphs
 import ramble.sokol.inversesesc.ui.theme.InverseSescTheme
 
 
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
+            DestinationsNavHost(navGraph = NavGraphs.root)
         }
     }
 }
