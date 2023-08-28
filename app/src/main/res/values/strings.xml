@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">InverseSesc</string>
     <string name="text_login">Вход</string>
+    <string name="text_to_login">Войти</string>
+    <string name="text_login_user">Логин</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_hint_login">Для восстановления логина или пароля обратитесь к Классному руководителю,
+</string>
 </resources>
