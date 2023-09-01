@@ -4,6 +4,14 @@
     <string name="text_to_login">Войти</string>
     <string name="text_login_user">Логин</string>
     <string name="text_password">Пароль</string>
-    <string name="text_hint_login">Для восстановления логина или пароля обратитесь к Классному руководителю,
-</string>
+    <string name="text_hint_login">Для восстановления логина или пароля обратитесь к Классному руководителю</string>
+    <string name="text_profile">Профиль</string>
+    <string name="text_frequent_questions">Частые вопросы</string>
+    <string name="text_frequent_questions_one">Как получить доступ к основным функциям?</string>
+    <string name="text_frequent_questions_two">Зачем заполнять профиль?</string>
+    <string name="text_frequent_questions_three">А если я еще не знаю, чем хочу заниматься?</string>
+    <string name="text_general_information">Общая информация</string>
+    <string name="text_contacts">Контакты</string>
+    <string name="text_about_me">О себе</string>
+    <string name="text_experience_in_projects">Опыт в проектах</string>
 </resources>

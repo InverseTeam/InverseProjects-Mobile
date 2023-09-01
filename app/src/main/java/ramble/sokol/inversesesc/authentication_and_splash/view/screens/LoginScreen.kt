@@ -30,8 +30,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
+import ramble.sokol.inversesesc.destinations.ProfileScreenDestination
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.TextInputNameEntry
@@ -42,7 +44,9 @@ private lateinit var password: MutableState<String>
 
 @Composable
 @Destination
-fun LoginScreen(){
+fun LoginScreen(
+    navigator: DestinationsNavigator
+){
 
     val mContext = LocalContext.current
 
@@ -116,7 +120,8 @@ fun LoginScreen(){
         Spacer(modifier = Modifier.padding(top = 8.dp))
         
         ButtonForEntry(text = stringResource(id = R.string.text_to_login)) {
-            
+            navigator.popBackStack()
+            navigator.navigate(ProfileScreenDestination)
         }
         
         Spacer(modifier = Modifier.padding(top = 16.dp))
