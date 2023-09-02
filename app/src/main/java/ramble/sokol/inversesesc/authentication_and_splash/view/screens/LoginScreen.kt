@@ -1,6 +1,11 @@
 package ramble.sokol.inversesesc.authentication_and_splash.view.screens
 
 import android.widget.Toast
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
@@ -20,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -31,8 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.delay
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
+import ramble.sokol.inversesesc.destinations.LoginScreenDestination
 import ramble.sokol.inversesesc.destinations.ProfileScreenDestination
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
@@ -50,18 +58,38 @@ fun LoginScreen(
 
     val mContext = LocalContext.current
 
-    var login = remember {
+    val login = remember {
         mutableStateOf("")
     }
 
-    var password = remember {
+    val password = remember {
         mutableStateOf("")
+    }
+
+    val transition = rememberInfiniteTransition(label = "")
+    val alpha by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 2000
+            ),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
+
+    LaunchedEffect(
+        key1 = true
+    ) {
+        delay(2000L)
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 31.dp),
+            .padding(horizontal = 31.dp)
+            //.alpha(alpha = alpha),
+                ,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
         ) {

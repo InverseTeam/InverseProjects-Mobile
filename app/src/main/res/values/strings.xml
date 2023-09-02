@@ -14,4 +14,6 @@
     <string name="text_contacts">Контакты</string>
     <string name="text_about_me">О себе</string>
     <string name="text_experience_in_projects">Опыт в проектах</string>
+    <string name="text_frequent_questions_description_two">Данные о тебе помогут другим людям быстрее принимать решения о работе с тобой, а также помогут нам подбирать подходящие тебе проекты</string>
+    <string name="text_frequent_questions_description_three">Ничего страшного, наша платформа поможет тебе найти интересные проекты и понять кем ты хочешь быть в них</string>
 </resources>
