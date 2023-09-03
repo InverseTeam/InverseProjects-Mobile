@@ -16,4 +16,6 @@
     <string name="text_experience_in_projects">Опыт в проектах</string>
     <string name="text_frequent_questions_description_two">Данные о тебе помогут другим людям быстрее принимать решения о работе с тобой, а также помогут нам подбирать подходящие тебе проекты</string>
     <string name="text_frequent_questions_description_three">Ничего страшного, наша платформа поможет тебе найти интересные проекты и понять кем ты хочешь быть в них</string>
+    <string name="text_frequent_questions_description_one">Для того, что бы получить доступ к основным функциям inverse заполни информацию о себе. Не забудь сохранить данные</string>
+    <string name="text_full_out_profile">Заполни профиль</string>
 </resources>

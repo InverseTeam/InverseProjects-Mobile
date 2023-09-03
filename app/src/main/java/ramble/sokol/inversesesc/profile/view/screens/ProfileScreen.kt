@@ -143,6 +143,18 @@ fun ProfileScreen(){
             clickItemOne = !clickItemOne
         }
 
+        if (clickItemOne){
+
+            Spacer(modifier = Modifier.padding(top = 8.dp))
+
+            ItemMoreInformation(
+                textTitle = stringResource(id = R.string.text_full_out_profile),
+                textDescription = stringResource(id = R.string.text_frequent_questions_description_one),
+                isImage = true
+            )
+
+        }
+
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
         MoreInformationBlock(
