@@ -26,4 +26,5 @@
     <string name="text_telegram">Телеграм</string>
     <string name="text_view_data_checkbox">Показывать данные для связи</string>
     <string name="text_specialization">Специальность</string>
+    <string name="text_specialists">Специалисты</string>
 </resources>

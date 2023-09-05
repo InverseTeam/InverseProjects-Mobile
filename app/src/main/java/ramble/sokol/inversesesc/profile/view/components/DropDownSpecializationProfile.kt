@@ -25,7 +25,6 @@ import ramble.sokol.inversesesc.ui.theme.ColorBackgroundTextField
 import ramble.sokol.inversesesc.ui.theme.ColorTextHint
 import ramble.sokol.inversesesc.ui.theme.ColorTextInput
 
-@Preview
 @Composable
 fun DropDownSpecializationProfile() {
 
@@ -68,7 +67,7 @@ fun DropDownSpecializationProfile() {
                     stringResource(id = R.string.text_specialization),
                     style = TextStyle(
                         color = ColorTextHint,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_regular)),
                         lineHeight = 24.sp,
                         fontWeight = FontWeight(700)
                     )
@@ -78,14 +77,14 @@ fun DropDownSpecializationProfile() {
                     style = TextStyle(
                         fontSize = 16.sp,
                         lineHeight = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_regular)),
                         fontWeight = FontWeight(700),
                         color = ColorTextInput,
                     )
                 )
             }
 
-            Icon(painter = painterResource(id = R.drawable.ic_arrowdown), contentDescription = "image arrow down")
+            Icon(painter = painterResource(id = R.drawable.ic_arrowdown2), contentDescription = "image arrow down")
         }
         
         Spacer(modifier = Modifier.padding(top = 6.dp))
@@ -105,7 +104,7 @@ fun DropDownSpecializationProfile() {
                         style = TextStyle(
                             fontSize = 16.sp,
                             lineHeight = 24.sp,
-                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_regular)),
                             fontWeight = FontWeight(700),
                             color = ColorTextInput,
                         ),

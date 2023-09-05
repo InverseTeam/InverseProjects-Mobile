@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
@@ -388,6 +390,9 @@ fun ProfileScreen(){
         ){
 
             Checkbox(
+                modifier = Modifier
+                    .width(24.dp)
+                    .height(24.dp),
                 checked = checked.value,
                 onCheckedChange = { checked_ ->
                     checked.value = checked_
@@ -396,6 +401,8 @@ fun ProfileScreen(){
                     checkedColor = ColorCheckBox
                 )
             )
+            
+            Spacer(modifier = Modifier.padding(start = 8.dp))
 
             Text(
                 text = stringResource(id = R.string.text_view_data_checkbox),
