@@ -58,11 +58,11 @@ fun LoginScreen(
 
     val mContext = LocalContext.current
 
-    val login = remember {
+    login = remember {
         mutableStateOf("")
     }
 
-    val password = remember {
+    password = remember {
         mutableStateOf("")
     }
 
