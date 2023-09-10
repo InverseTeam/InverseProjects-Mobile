@@ -40,6 +40,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.delay
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
+import ramble.sokol.inversesesc.destinations.BeforeTestScreenDestination
 import ramble.sokol.inversesesc.destinations.LoginScreenDestination
 import ramble.sokol.inversesesc.destinations.ProfileScreenDestination
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
@@ -149,7 +150,7 @@ fun LoginScreen(
         
         ButtonForEntry(text = stringResource(id = R.string.text_to_login)) {
             navigator.popBackStack()
-            navigator.navigate(ProfileScreenDestination)
+            navigator.navigate(BeforeTestScreenDestination)
         }
         
         Spacer(modifier = Modifier.padding(top = 16.dp))
