@@ -151,7 +151,7 @@ fun LoginScreen(
         
         ButtonForEntry(text = stringResource(id = R.string.text_to_login)) {
             navigator.popBackStack()
-            navigator.navigate(BottomMenuScreenDestination)
+            navigator.navigate(BeforeTestScreenDestination)
         }
         
         Spacer(modifier = Modifier.padding(top = 16.dp))

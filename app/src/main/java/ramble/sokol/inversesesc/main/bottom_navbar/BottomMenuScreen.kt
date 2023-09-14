@@ -116,3 +116,4 @@ fun BottomMenuScreen(
         2 -> ProfileScreen(navigator)
     }
 }
+
