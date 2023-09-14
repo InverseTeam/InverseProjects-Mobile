@@ -34,4 +34,5 @@
     <string name="text_to_app">В приложение</string>
     <string name="text_description_final_login">Мы сохранили твои ответы в профиле</string>
     <string name="text_final_login">Готово!</string>
+    <string name="text_continue">Далее</string>
 </resources>

@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
 import ramble.sokol.inversesesc.profile.view.components.ItemMoreInformation
@@ -61,7 +62,9 @@ private lateinit var aboutMe: MutableState<String>
 
 @Destination
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(
+    navigator: DestinationsNavigator
+){
 
     var clickItemOne by remember {
         mutableStateOf(false)
