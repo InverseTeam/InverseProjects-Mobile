@@ -24,15 +24,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForSkip
+import ramble.sokol.inversesesc.destinations.BottomMenuScreenDestination
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
 
 @Destination
 @Composable
-fun AfterTestScreen(){
+fun AfterTestScreen(
+    navigator: DestinationsNavigator
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -95,7 +99,8 @@ fun AfterTestScreen(){
         ){
 
             ButtonForEntry(text = stringResource(id = R.string.text_to_app)) {
-                
+                navigator.popBackStack()
+                navigator.navigate(BottomMenuScreenDestination)
             }
 
         }

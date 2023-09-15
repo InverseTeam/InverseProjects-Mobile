@@ -1,5 +1,6 @@
 package ramble.sokol.inversesesc.authentication_and_splash.view.screens
 
+import DropDownSpecializationProfile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -43,6 +44,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
+import ramble.sokol.inversesesc.destinations.AfterTestScreenDestination
 import ramble.sokol.inversesesc.profile.view.components.ItemMoreInformation
 import ramble.sokol.inversesesc.profile.view.components.MoreInformationBlock
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
@@ -52,12 +54,14 @@ import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTextHint
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.InputTextEntry
+import ramble.sokol.sberafisha.authentication_and_splash.view.components.MultiLineInputTextEntry
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.TextInputStatic
 
 lateinit var currentScreen: MutableState<Int>
 private lateinit var email: MutableState<String>
 private lateinit var telegram: MutableState<String>
 private lateinit var checked: MutableState<Boolean>
+private lateinit var aboutMe: MutableState<String>
 
 @Destination
 @Composable
@@ -110,6 +114,10 @@ fun CreateProfileScreen(
 
     checked = remember {
         mutableStateOf(false)
+    }
+
+    aboutMe = remember {
+        mutableStateOf("")
     }
 
     Column(
@@ -421,6 +429,44 @@ fun CreateProfileScreen(
 
                 Spacer(modifier = Modifier.padding(top = 32.dp))
 
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_about_me),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                        fontWeight = FontWeight(500),
+                        color = ColorTitle,
+                        letterSpacing = 0.18.sp,
+                    ),
+                    textAlign = TextAlign.Start
+                )
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                DropDownSpecializationProfile()
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                MultiLineInputTextEntry(
+                    text = aboutMe.value,
+                    idText = R.string.text_about_me,
+                    onValueChange = {
+                        aboutMe.value = it
+                    },
+                    interactionSource = remember { MutableInteractionSource() }
+                        .also { interactionSource ->
+                            LaunchedEffect(interactionSource) {
+                                interactionSource.interactions.collect {
+                                    if (it is PressInteraction.Release) {
+
+                                    }
+                                }
+                            }
+                        })
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
             }
 
         }
@@ -473,6 +519,10 @@ fun CreateProfileScreen(
             Spacer(modifier = Modifier.padding(top = 8.dp))
 
             ButtonForEntry(text = stringResource(id = R.string.text_continue)) {
+                if (currentScreen.value == 3){
+                    navigator.popBackStack()
+                    navigator.navigate(AfterTestScreenDestination)
+                }
                 currentScreen.value++
             }
 

@@ -28,6 +28,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForSkip
+import ramble.sokol.inversesesc.destinations.BottomMenuScreenDestination
 import ramble.sokol.inversesesc.destinations.CreateProfileScreenDestination
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
@@ -106,7 +107,8 @@ fun BeforeTestScreen(
             Spacer(modifier = Modifier.padding(top = 8.dp))
 
             ButtonForSkip(text = stringResource(id = R.string.text_skip)) {
-
+                navigator.popBackStack()
+                navigator.navigate(BottomMenuScreenDestination)
             }
 
         }

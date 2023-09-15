@@ -43,7 +43,7 @@ fun BottomMenuScreen(
     navigator: DestinationsNavigator
 ){
     var selectedItem by rememberSaveable {
-        mutableIntStateOf(1)
+        mutableIntStateOf(0)
     }
 
     Column(
