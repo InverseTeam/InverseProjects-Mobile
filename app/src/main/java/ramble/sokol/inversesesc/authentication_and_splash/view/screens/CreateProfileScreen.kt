@@ -11,13 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -33,10 +37,13 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
+import ramble.sokol.inversesesc.profile.view.components.ItemMoreInformation
+import ramble.sokol.inversesesc.profile.view.components.MoreInformationBlock
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundTextField
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
+import ramble.sokol.sberafisha.authentication_and_splash.view.components.TextInputStatic
 
 lateinit var currentScreen: MutableState<Int>
 
@@ -50,19 +57,40 @@ fun CreateProfileScreen(
         mutableIntStateOf(1)
     }
 
+    var clickItemOne by remember {
+        mutableStateOf(false)
+    }
 
+    val iconItemOne: Int =
+        if (clickItemOne)
+            R.drawable.icon_hide_content
+        else
+            R.drawable.icon_plus
+
+    var clickItemTwo by remember {
+        mutableStateOf(false)
+    }
+
+    val iconItemTwo: Int =
+        if (clickItemTwo)
+            R.drawable.icon_hide_content
+        else
+            R.drawable.icon_plus
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 13.dp, bottom = 37.dp, start = 32.dp, end = 32.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 37.dp, start = 32.dp, end = 32.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         if (currentScreen.value == 1){
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 13.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
@@ -105,6 +133,127 @@ fun CreateProfileScreen(
 
                 }
 
+                Spacer(modifier = Modifier.padding(top = 26.dp))
+
+                TextInputStatic(text = "Артём",
+                    textHint = stringResource(id = R.string.text_name),
+                    onValueChange = {})
+                
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                TextInputStatic(text = "Сокерин",
+                    textHint = stringResource(id = R.string.text_surname),
+                    onValueChange = {})
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                TextInputStatic(text = "11Н",
+                    textHint = stringResource(id = R.string.text_class),
+                    onValueChange = {})
+
+                Spacer(modifier = Modifier.padding(top = 32.dp))
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_frequent_questions),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                        fontWeight = FontWeight(500),
+                        color = ColorTitle,
+                        letterSpacing = 0.18.sp,
+                    ),
+                    textAlign = TextAlign.Start
+                )
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                MoreInformationBlock(
+                    text = stringResource(id = R.string.text_frequent_questions_two),
+                    idPainter = iconItemTwo
+                ) {
+                    clickItemTwo = !clickItemTwo
+                }
+
+                if (clickItemTwo){
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    ItemMoreInformation(
+                        textTitle = stringResource(id = R.string.text_frequent_questions_two),
+                        textDescription = stringResource(id = R.string.text_frequent_questions_description_two)
+                    )
+
+                }
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                MoreInformationBlock(
+                    text = stringResource(id = R.string.text_frequent_questions_one),
+                    idPainter = iconItemOne
+                ) {
+                    clickItemOne = !clickItemOne
+                }
+
+                if (clickItemOne){
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    ItemMoreInformation(
+                        textTitle = stringResource(id = R.string.text_full_out_profile),
+                        textDescription = stringResource(id = R.string.text_frequent_questions_description_one),
+                        isImage = true
+                    )
+
+                }
+
+            }
+
+            Spacer(Modifier.padding(top = 25.dp))
+
+        }else if (currentScreen.value == 2){
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+
+                Spacer(modifier = Modifier.padding(top = 13.dp))
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_acquaintance),
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                        fontWeight = FontWeight(700),
+                        color = ColorTitle,
+                        letterSpacing = 0.24.sp,
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.padding(top = 32.dp))
+
+                Box(
+                    modifier = Modifier.fillMaxWidth(0.45f),
+                    contentAlignment = Alignment.BottomEnd
+                ){
+
+                    Image(
+                        painter = painterResource(id = R.drawable.image_add_photo),
+                        contentDescription = "image add photo"
+                    )
+
+                    Box(
+                        modifier = Modifier.fillMaxWidth(0.4f),
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.icon_add_photo),
+                            contentDescription = "image add photo"
+                        )
+                    }
+                }
             }
         }
 
@@ -125,7 +274,7 @@ fun CreateProfileScreen(
                         .height(8.dp)
                         .weight(0.33f)
                         .background(
-                            color = if (currentScreen.value < 4) ColorBackgroundButton else ColorBackgroundTextField,
+                            color = if (currentScreen.value > 0) ColorBackgroundButton else ColorBackgroundTextField,
                             shape = RoundedCornerShape(size = 24.dp)
                         )
                 )
@@ -136,7 +285,7 @@ fun CreateProfileScreen(
                         .height(8.dp)
                         .weight(0.33f)
                         .background(
-                            color = if (currentScreen.value < 3) ColorBackgroundButton else ColorBackgroundTextField,
+                            color = if (currentScreen.value > 1) ColorBackgroundButton else ColorBackgroundTextField,
                             shape = RoundedCornerShape(size = 24.dp)
                         )
                 )
@@ -147,7 +296,7 @@ fun CreateProfileScreen(
                         .height(8.dp)
                         .weight(0.33f)
                         .background(
-                            color = if (currentScreen.value < 2) ColorBackgroundButton else ColorBackgroundTextField,
+                            color = if (currentScreen.value > 2) ColorBackgroundButton else ColorBackgroundTextField,
                             shape = RoundedCornerShape(size = 24.dp)
                         )
                 )
