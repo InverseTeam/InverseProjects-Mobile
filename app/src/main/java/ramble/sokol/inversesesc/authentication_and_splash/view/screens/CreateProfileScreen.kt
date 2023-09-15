@@ -2,6 +2,8 @@ package ramble.sokol.inversesesc.authentication_and_splash.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,11 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -41,11 +47,17 @@ import ramble.sokol.inversesesc.profile.view.components.ItemMoreInformation
 import ramble.sokol.inversesesc.profile.view.components.MoreInformationBlock
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundTextField
+import ramble.sokol.inversesesc.ui.theme.ColorCheckBox
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
+import ramble.sokol.inversesesc.ui.theme.ColorTextHint
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
+import ramble.sokol.sberafisha.authentication_and_splash.view.components.InputTextEntry
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.TextInputStatic
 
 lateinit var currentScreen: MutableState<Int>
+private lateinit var email: MutableState<String>
+private lateinit var telegram: MutableState<String>
+private lateinit var checked: MutableState<Boolean>
 
 @Destination
 @Composable
@@ -76,6 +88,29 @@ fun CreateProfileScreen(
             R.drawable.icon_hide_content
         else
             R.drawable.icon_plus
+
+    var clickItemThree by remember {
+        mutableStateOf(false)
+    }
+
+    val iconItemThree: Int =
+        if (clickItemThree)
+            R.drawable.icon_hide_content
+        else
+            R.drawable.icon_plus
+
+
+    email = remember {
+        mutableStateOf("")
+    }
+
+    telegram = remember {
+        mutableStateOf("")
+    }
+
+    checked = remember {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = Modifier
@@ -235,26 +270,159 @@ fun CreateProfileScreen(
 
                 Spacer(modifier = Modifier.padding(top = 32.dp))
 
-                Box(
-                    modifier = Modifier.fillMaxWidth(0.45f),
-                    contentAlignment = Alignment.BottomEnd
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_contacts),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                        fontWeight = FontWeight(500),
+                        color = ColorTitle,
+                        letterSpacing = 0.18.sp,
+                    ),
+                    textAlign = TextAlign.Start
+                )
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                InputTextEntry(
+                    text = email.value,
+                    onValueChange = {
+                        email.value = it
+                    },
+                    idText = R.string.text_email,
+                    interactionSource = remember { MutableInteractionSource() }
+                        .also { interactionSource ->
+                            LaunchedEffect(interactionSource) {
+                                interactionSource.interactions.collect {
+                                    if (it is PressInteraction.Release) {
+
+                                    }
+                                }
+                            }
+                        }
+                )
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                InputTextEntry(
+                    text = telegram.value,
+                    idText = R.string.text_telegram,
+                    onValueChange = {
+                        telegram.value = it
+                    },
+                    interactionSource = remember { MutableInteractionSource() }
+                        .also { interactionSource ->
+                            LaunchedEffect(interactionSource) {
+                                interactionSource.interactions.collect {
+                                    if (it is PressInteraction.Release) {
+
+                                    }
+                                }
+                            }
+                        }
+                )
+
+                Spacer(modifier = Modifier.padding(top = 17.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ){
 
-                    Image(
-                        painter = painterResource(id = R.drawable.image_add_photo),
-                        contentDescription = "image add photo"
+                    Checkbox(
+                        modifier = Modifier
+                            .width(24.dp)
+                            .height(24.dp),
+                        checked = checked.value,
+                        onCheckedChange = { checked_ ->
+                            checked.value = checked_
+                        },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = ColorCheckBox
+                        )
                     )
 
-                    Box(
-                        modifier = Modifier.fillMaxWidth(0.4f),
-                    ){
-                        Image(
-                            painter = painterResource(id = R.drawable.icon_add_photo),
-                            contentDescription = "image add photo"
+                    Spacer(modifier = Modifier.padding(start = 8.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.text_view_data_checkbox),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            lineHeight = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                            fontWeight = FontWeight(400),
+                            color = ColorTextHint,
                         )
-                    }
+                    )
+
                 }
             }
+
+            Spacer(Modifier.padding(top = 25.dp))
+
+        }else if (currentScreen.value == 3){
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Spacer(modifier = Modifier.padding(top = 13.dp))
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_acquaintance),
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                        fontWeight = FontWeight(700),
+                        color = ColorTitle,
+                        letterSpacing = 0.24.sp,
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.padding(top = 32.dp))
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_frequent_questions),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                        fontWeight = FontWeight(500),
+                        color = ColorTitle,
+                        letterSpacing = 0.18.sp,
+                    ),
+                    textAlign = TextAlign.Start
+                )
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                MoreInformationBlock(
+                    text = stringResource(id = R.string.text_frequent_questions_three),
+                    idPainter = iconItemThree
+                ) {
+                    clickItemThree = !clickItemThree
+                }
+
+                if (clickItemThree){
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    ItemMoreInformation(
+                        textTitle = stringResource(id = R.string.text_frequent_questions_three),
+                        textDescription = stringResource(id = R.string.text_frequent_questions_description_three)
+                    )
+
+                }
+
+                Spacer(modifier = Modifier.padding(top = 32.dp))
+
+            }
+
         }
 
         Column(
