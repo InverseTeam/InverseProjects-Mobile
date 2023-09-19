@@ -1,12 +1,9 @@
-package ramble.sokol.inversesesc.specialists.view.components
+package ramble.sokol.inversesesc.profile.view.components
 
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -28,31 +24,37 @@ import androidx.compose.ui.unit.sp
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
 
-
 @Composable
-fun ButtonGoTeMessage(
+fun ButtonForContactsProfile(
+    text: String,
     onClick: () -> Unit
 )
 {
     Button(
         modifier = Modifier
             .background(
-                color = White,
-                shape = RoundedCornerShape(size = 12.dp)
+                color = ColorBackgroundButton,
+                shape = RoundedCornerShape(size = 15.dp)
             ),
         colors = ButtonDefaults.buttonColors(
-            containerColor = White
+            containerColor = ColorBackgroundButton
         ),
         onClick = onClick
 
     ){
-        Image(
+        Text(
             modifier = Modifier
-                .width(20.dp)
-                .height(20.dp)
-                .padding(horizontal = 14.dp, vertical = 14.dp),
-            painter = painterResource(id = R.drawable.image_go_to_message),
-            contentDescription = "go message"
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            text = text,
+            style = TextStyle(
+                fontSize = 16.sp,
+                lineHeight = 16.sp,
+                fontWeight = FontWeight(700),
+                color = White,
+                fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                textAlign = TextAlign.Center
+            )
         )
     }
 }

@@ -62,6 +62,7 @@ private lateinit var email: MutableState<String>
 private lateinit var telegram: MutableState<String>
 private lateinit var checked: MutableState<Boolean>
 private lateinit var aboutMe: MutableState<String>
+private lateinit var phone: MutableState<String>
 
 @Destination
 @Composable
@@ -117,6 +118,10 @@ fun CreateProfileScreen(
     }
 
     aboutMe = remember {
+        mutableStateOf("")
+    }
+
+    phone = remember {
         mutableStateOf("")
     }
 
@@ -289,6 +294,26 @@ fun CreateProfileScreen(
                         letterSpacing = 0.18.sp,
                     ),
                     textAlign = TextAlign.Start
+                )
+
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                InputTextEntry(
+                    text = phone.value,
+                    onValueChange = {
+                        phone.value = it
+                    },
+                    idText = R.string.text_phone_number,
+                    interactionSource = remember { MutableInteractionSource() }
+                        .also { interactionSource ->
+                            LaunchedEffect(interactionSource) {
+                                interactionSource.interactions.collect {
+                                    if (it is PressInteraction.Release) {
+
+                                    }
+                                }
+                            }
+                        }
                 )
 
                 Spacer(modifier = Modifier.padding(top = 8.dp))

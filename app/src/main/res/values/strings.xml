@@ -23,6 +23,7 @@
     <string name="text_class">Класс</string>
     <string name="text_save">Сохранить</string>
     <string name="text_email">Почта</string>
+    <string name="text_phone_number">Номер</string>
     <string name="text_telegram">Телеграм</string>
     <string name="text_view_data_checkbox">Показывать данные для связи</string>
     <string name="text_specialization">Специальность</string>
