@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -55,7 +59,9 @@ import ramble.sokol.inversesesc.authentication_and_splash.view.components.Button
 import ramble.sokol.inversesesc.profile.view.components.ButtonForContactsProfile
 import ramble.sokol.inversesesc.profile.view.components.ButtonGoTeMessageProfile
 import ramble.sokol.inversesesc.profile.view.components.ItemBottomSheetContacts
+import ramble.sokol.inversesesc.profile.view.components.ItemExperienceProjectsProfile
 import ramble.sokol.inversesesc.profile.view.components.ItemMoreInformation
+import ramble.sokol.inversesesc.profile.view.components.ItemSkillsProfile
 import ramble.sokol.inversesesc.profile.view.components.MoreInformationBlock
 import ramble.sokol.inversesesc.specialists.view.components.ButtonGoTeMessage
 import ramble.sokol.inversesesc.ui.theme.ColorBoldText
@@ -90,7 +96,6 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
             .padding(start = 32.dp, end = 32.dp, bottom = 57.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -182,7 +187,19 @@ fun ProfileScreen(
                 color = ColorTextHint,
             )
         )
-        
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
+
+        val skills = listOf("Java", "Kotlin", "ООП", "Android developer", "Python", "ML", "PyTorch")
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            content = {
+                items(skills.size) { it ->
+                    ItemSkillsProfile(text = skills[it])
+                }
+            })
+
         Spacer(modifier = Modifier.padding(top = 16.dp))
 
         Row (
@@ -206,7 +223,9 @@ fun ProfileScreen(
                     onDismissRequest = { sheetIsOpen = false }
                 ) {
                     Column (
-                        modifier = Modifier.fillMaxWidth().background(Color.White),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.White),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
 
@@ -249,7 +268,7 @@ fun ProfileScreen(
 
             Box(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 contentAlignment = Alignment.CenterEnd
             ){
                 ButtonGoTeMessageProfile {
@@ -262,6 +281,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.padding(top = 32.dp))
 
         Text(
+            modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.text_experience_in_projects),
             style = TextStyle(
                 fontSize = 18.sp,
@@ -269,8 +289,25 @@ fun ProfileScreen(
                 fontWeight = FontWeight(500),
                 color = ColorTitle,
                 letterSpacing = 0.18.sp,
-            )
+            ),
+            textAlign = TextAlign.Start
         )
+        
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+
+        val listName = listOf("Inverse", "Svetozavr", "Afisha")
+        val listDesc = listOf("Ed-tech · 2019 - 2021", "Ed-tech · 2019 - 2021", "Ed-tech · 2019 - 2021")
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()){
+            items(listName.size){
+                it -> ItemExperienceProjectsProfile(
+                nameProjects = listName[it], descProjects = listDesc[it])
+                
+                Spacer(modifier = Modifier.padding(top = 8.dp))
+                
+            }
+        }
 
     }
 

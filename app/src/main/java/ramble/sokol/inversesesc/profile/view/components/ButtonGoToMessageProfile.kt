@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundTextField
+import java.util.Scanner
 
 
 @Composable
@@ -58,7 +59,7 @@ fun ButtonGoTeMessageProfile(
         )
     ){
 
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
             Image(
                 modifier = Modifier
                     .fillMaxWidth(),
