@@ -39,6 +39,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dokar.chiptextfield.Chip
+import com.dokar.chiptextfield.m3.ChipTextField
+import com.dokar.chiptextfield.m3.OutlinedChipTextField
+import com.dokar.chiptextfield.rememberChipTextFieldState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
@@ -127,8 +131,7 @@ fun EditProfileScreen(
     }
 
     phone = remember {
-        mutableStateOf("")
-    }
+        mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -414,6 +417,14 @@ fun EditProfileScreen(
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
         DropDownSpecializationProfile()
+
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+
+        val state = rememberChipTextFieldState<Chip>()
+        ChipTextField(
+            state = state,
+            onSubmit = ::Chip,
+        )
 
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
