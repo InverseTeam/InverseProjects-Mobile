@@ -3,6 +3,7 @@ package ramble.sokol.inversesesc.profile.view.screens
 import DropDownSpecializationProfile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
@@ -56,6 +57,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
+import ramble.sokol.inversesesc.destinations.EditProfileScreenDestination
 import ramble.sokol.inversesesc.profile.view.components.ButtonForContactsProfile
 import ramble.sokol.inversesesc.profile.view.components.ButtonGoTeMessageProfile
 import ramble.sokol.inversesesc.profile.view.components.ItemBottomSheetContacts
@@ -73,20 +75,12 @@ import ramble.sokol.sberafisha.authentication_and_splash.view.components.InputTe
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.MultiLineInputTextEntry
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.TextInputNameEntry
 
-//private lateinit var name: MutableState<String>
-//private lateinit var surname: MutableState<String>
-//private lateinit var classText: MutableState<String>
-//private lateinit var email: MutableState<String>
-//private lateinit var telegram: MutableState<String>
-//private lateinit var checked: MutableState<Boolean>
-//private lateinit var aboutMe: MutableState<String>
-
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun ProfileScreen(
     navigator: DestinationsNavigator
-){
+) {
 
     val sheetState = rememberModalBottomSheetState()
     var sheetIsOpen by rememberSaveable {
@@ -107,7 +101,7 @@ fun ProfileScreen(
                 .padding(top = 15.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+        ) {
 
             Text(
                 text = stringResource(id = R.string.text_profile),
@@ -123,7 +117,11 @@ fun ProfileScreen(
             Icon(
                 modifier = Modifier
                     .width(32.dp)
-                    .height(32.dp),
+                    .height(32.dp)
+                    .clickable {
+                        navigator.popBackStack()
+                        navigator.navigate(EditProfileScreenDestination)
+                    },
                 painter = painterResource(id = R.drawable.icon_edit_profile),
                 contentDescription = "icon_edit_profile"
             )
@@ -132,16 +130,17 @@ fun ProfileScreen(
 
         Spacer(modifier = Modifier.padding(top = 20.dp))
 
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
-        ){
-            
+        ) {
+
             Icon(
                 modifier = Modifier.fillMaxWidth(0.25f),
                 painter = painterResource(id = R.drawable.image_add_photo),
-                contentDescription = "image_add_photo")
+                contentDescription = "image_add_photo"
+            )
 
             Spacer(modifier = Modifier.padding(start = 8.dp))
 
@@ -202,15 +201,15 @@ fun ProfileScreen(
 
         Spacer(modifier = Modifier.padding(top = 16.dp))
 
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
 
             Box(
                 modifier = Modifier.fillMaxWidth(0.8f),
                 contentAlignment = Alignment.CenterStart
-            ){
+            ) {
                 ButtonForContactsProfile(text = stringResource(id = R.string.text_contacts)) {
                     sheetIsOpen = true
                 }
@@ -222,22 +221,22 @@ fun ProfileScreen(
                     containerColor = Color.White,
                     onDismissRequest = { sheetIsOpen = false }
                 ) {
-                    Column (
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Color.White),
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ){
+                    ) {
 
                         Spacer(modifier = Modifier.padding(top = 25.dp))
 
-                        Column (
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 32.dp),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally
-                        ){
+                        ) {
 
                             ItemBottomSheetContacts(
                                 idPaint = R.drawable.image_number_profile,
@@ -270,7 +269,7 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentAlignment = Alignment.CenterEnd
-            ){
+            ) {
                 ButtonGoTeMessageProfile {
 
                 }
@@ -292,435 +291,26 @@ fun ProfileScreen(
             ),
             textAlign = TextAlign.Start
         )
-        
+
         Spacer(modifier = Modifier.padding(top = 8.dp))
 
         val listName = listOf("Inverse", "Svetozavr", "Afisha")
-        val listDesc = listOf("Ed-tech · 2019 - 2021", "Ed-tech · 2019 - 2021", "Ed-tech · 2019 - 2021")
+        val listDesc =
+            listOf("Ed-tech · 2019 - 2021", "Ed-tech · 2019 - 2021", "Ed-tech · 2019 - 2021")
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth()){
-            items(listName.size){
-                it -> ItemExperienceProjectsProfile(
-                nameProjects = listName[it], descProjects = listDesc[it])
-                
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            items(listName.size) { it ->
+                ItemExperienceProjectsProfile(
+                    nameProjects = listName[it], descProjects = listDesc[it]
+                )
+
                 Spacer(modifier = Modifier.padding(top = 8.dp))
-                
+
             }
         }
 
     }
-
-
-
-
-
-//    var clickItemOne by remember {
-//        mutableStateOf(false)
-//    }
-//
-//    val iconItemOne: Int =
-//        if (clickItemOne)
-//            R.drawable.icon_hide_content
-//        else
-//            R.drawable.icon_plus
-//
-//    var clickItemTwo by remember {
-//        mutableStateOf(false)
-//    }
-//
-//    val iconItemTwo: Int =
-//        if (clickItemTwo)
-//            R.drawable.icon_hide_content
-//        else
-//            R.drawable.icon_plus
-//
-//    var clickItemThree by remember {
-//        mutableStateOf(false)
-//    }
-//
-//    val iconItemThree: Int =
-//        if (clickItemThree)
-//            R.drawable.icon_hide_content
-//        else
-//            R.drawable.icon_plus
-//
-//    name = remember {
-//        mutableStateOf("")
-//    }
-//
-//    surname = remember {
-//        mutableStateOf("")
-//    }
-//
-//    classText = remember {
-//        mutableStateOf("")
-//    }
-//
-//    email = remember {
-//        mutableStateOf("")
-//    }
-//
-//    telegram = remember {
-//        mutableStateOf("")
-//    }
-//
-//    checked = remember {
-//        mutableStateOf(false)
-//    }
-//
-//    aboutMe = remember {
-//        mutableStateOf("")
-//    }
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .verticalScroll(rememberScrollState())
-//            .padding(horizontal = 33.dp),
-//        verticalArrangement = Arrangement.Top,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ){
-//
-//        Spacer(modifier = Modifier.padding(top = 17.dp))
-//
-//        Text(
-//            modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(id = R.string.text_profile),
-//            style = TextStyle(
-//                fontSize = 24.sp,
-//                fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
-//                fontWeight = FontWeight(700),
-//                color = ColorTitle,
-//                letterSpacing = 0.24.sp,
-//                textAlign = TextAlign.Start
-//            )
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 32.dp))
-//
-//        Box(
-//            modifier = Modifier.fillMaxWidth(0.45f),
-//            contentAlignment = Alignment.BottomEnd
-//        ){
-//
-//            Image(
-//                painter = painterResource(id = R.drawable.image_add_photo),
-//                contentDescription = "image add photo"
-//            )
-//
-//            Box(
-//                modifier = Modifier.fillMaxSize(0.4f),
-//                contentAlignment = Alignment.BottomEnd
-//            ){
-//                Image(
-//                    painter = painterResource(id = R.drawable.icon_add_photo),
-//                    contentDescription = "image add photo"
-//                )
-//            }
-//
-//        }
-//
-//
-//        Spacer(modifier = Modifier.padding(top = 32.dp))
-//
-//        Text(
-//            modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(id = R.string.text_frequent_questions),
-//            style = TextStyle(
-//                fontSize = 18.sp,
-//                fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-//                fontWeight = FontWeight(500),
-//                color = ColorTitle,
-//                letterSpacing = 0.18.sp,
-//            ),
-//            textAlign = TextAlign.Start
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        MoreInformationBlock(
-//            text = stringResource(id = R.string.text_frequent_questions_one),
-//            idPainter = iconItemOne
-//        ) {
-//            clickItemOne = !clickItemOne
-//        }
-//
-//        if (clickItemOne){
-//
-//            Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//            ItemMoreInformation(
-//                textTitle = stringResource(id = R.string.text_full_out_profile),
-//                textDescription = stringResource(id = R.string.text_frequent_questions_description_one),
-//                isImage = true
-//            )
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        MoreInformationBlock(
-//            text = stringResource(id = R.string.text_frequent_questions_two),
-//            idPainter = iconItemTwo
-//        ) {
-//            clickItemTwo = !clickItemTwo
-//        }
-//
-//        if (clickItemTwo){
-//
-//            Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//            ItemMoreInformation(
-//                textTitle = stringResource(id = R.string.text_frequent_questions_two),
-//                textDescription = stringResource(id = R.string.text_frequent_questions_description_two)
-//            )
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        MoreInformationBlock(
-//            text = stringResource(id = R.string.text_frequent_questions_three),
-//            idPainter = iconItemThree
-//        ) {
-//            clickItemThree = !clickItemThree
-//        }
-//
-//        if (clickItemThree){
-//
-//            Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//            ItemMoreInformation(
-//                textTitle = stringResource(id = R.string.text_frequent_questions_three),
-//                textDescription = stringResource(id = R.string.text_frequent_questions_description_three)
-//            )
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 32.dp))
-//
-//        Text(
-//            modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(id = R.string.text_general_information),
-//            style = TextStyle(
-//                fontSize = 18.sp,
-//                fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-//                fontWeight = FontWeight(500),
-//                color = ColorTitle,
-//                letterSpacing = 0.18.sp,
-//            ),
-//            textAlign = TextAlign.Start
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        InputTextEntry(
-//            text = name.value,
-//            onValueChange = {
-//                name.value = it
-//            },
-//            idText = R.string.text_name,
-//            interactionSource = remember { MutableInteractionSource() }
-//                .also { interactionSource ->
-//                    LaunchedEffect(interactionSource) {
-//                        interactionSource.interactions.collect {
-//                            if (it is PressInteraction.Release) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        InputTextEntry(
-//            text = surname.value,
-//            onValueChange = {
-//                surname.value = it
-//            },
-//            idText = R.string.text_surname,
-//            interactionSource = remember { MutableInteractionSource() }
-//                .also { interactionSource ->
-//                    LaunchedEffect(interactionSource) {
-//                        interactionSource.interactions.collect {
-//                            if (it is PressInteraction.Release) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        InputTextEntry(
-//            text = classText.value,
-//            onValueChange = {
-//                classText.value = it
-//            },
-//            idText = R.string.text_class,
-//            interactionSource = remember { MutableInteractionSource() }
-//                .also { interactionSource ->
-//                    LaunchedEffect(interactionSource) {
-//                        interactionSource.interactions.collect {
-//                            if (it is PressInteraction.Release) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        ButtonForEntry(text = stringResource(id = R.string.text_save)) {
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 32.dp))
-//
-//        Text(
-//            modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(id = R.string.text_contacts),
-//            style = TextStyle(
-//                fontSize = 18.sp,
-//                fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-//                fontWeight = FontWeight(500),
-//                color = ColorTitle,
-//                letterSpacing = 0.18.sp,
-//            ),
-//            textAlign = TextAlign.Start
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        InputTextEntry(
-//            text = email.value,
-//            onValueChange = {
-//                email.value = it
-//            },
-//            idText = R.string.text_email,
-//            interactionSource = remember { MutableInteractionSource() }
-//                .also { interactionSource ->
-//                    LaunchedEffect(interactionSource) {
-//                        interactionSource.interactions.collect {
-//                            if (it is PressInteraction.Release) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        InputTextEntry(
-//            text = telegram.value,
-//            idText = R.string.text_telegram,
-//            onValueChange = {
-//                telegram.value = it
-//            },
-//            interactionSource = remember { MutableInteractionSource() }
-//                .also { interactionSource ->
-//                    LaunchedEffect(interactionSource) {
-//                        interactionSource.interactions.collect {
-//                            if (it is PressInteraction.Release) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 17.dp))
-//
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            verticalAlignment = Alignment.CenterVertically
-//        ){
-//
-//            Checkbox(
-//                modifier = Modifier
-//                    .width(24.dp)
-//                    .height(24.dp),
-//                checked = checked.value,
-//                onCheckedChange = { checked_ ->
-//                    checked.value = checked_
-//                },
-//                colors = CheckboxDefaults.colors(
-//                    checkedColor = ColorCheckBox
-//                )
-//            )
-//
-//            Spacer(modifier = Modifier.padding(start = 8.dp))
-//
-//            Text(
-//                text = stringResource(id = R.string.text_view_data_checkbox),
-//                style = TextStyle(
-//                    fontSize = 18.sp,
-//                    lineHeight = 16.sp,
-//                    fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-//                    fontWeight = FontWeight(400),
-//                    color = ColorTextHint,
-//                )
-//            )
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 24.dp))
-//
-//        ButtonForEntry(text = stringResource(id = R.string.text_save)) {
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 32.dp))
-//
-//        Text(
-//            modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(id = R.string.text_about_me),
-//            style = TextStyle(
-//                fontSize = 18.sp,
-//                fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-//                fontWeight = FontWeight(500),
-//                color = ColorTitle,
-//                letterSpacing = 0.18.sp,
-//            ),
-//            textAlign = TextAlign.Start
-//        )
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        DropDownSpecializationProfile()
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        MultiLineInputTextEntry(
-//            text = aboutMe.value,
-//            idText = R.string.text_about_me,
-//            onValueChange = {
-//                aboutMe.value = it
-//            },
-//            interactionSource = remember { MutableInteractionSource() }
-//                .also { interactionSource ->
-//                    LaunchedEffect(interactionSource) {
-//                        interactionSource.interactions.collect {
-//                            if (it is PressInteraction.Release) {
-//
-//                            }
-//                        }
-//                    }
-//                })
-//
-//        Spacer(modifier = Modifier.padding(top = 8.dp))
-//
-//        ButtonForEntry(text = stringResource(id = R.string.text_save)) {
-//
-//        }
-//
-//        Spacer(modifier = Modifier.padding(top = 32.dp))
-//
-//    }
 
 }

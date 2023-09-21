@@ -134,366 +134,370 @@ fun CreateProfileScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        if (currentScreen.value == 1){
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 13.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-
-                Spacer(modifier = Modifier.padding(top = 13.dp))
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_acquaintance),
-                    style = TextStyle(
-                        fontSize = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
-                        fontWeight = FontWeight(700),
-                        color = ColorTitle,
-                        letterSpacing = 0.24.sp,
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.padding(top = 32.dp))
-
-                Box(
-                    modifier = Modifier.fillMaxWidth(0.45f),
-                    contentAlignment = Alignment.BottomEnd
+        when (currentScreen.value) {
+            1 -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 13.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ){
 
-                    Image(
-                        painter = painterResource(id = R.drawable.image_add_photo),
-                        contentDescription = "image add photo"
+                    Spacer(modifier = Modifier.padding(top = 13.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_acquaintance),
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                            fontWeight = FontWeight(700),
+                            color = ColorTitle,
+                            letterSpacing = 0.24.sp,
+                        ),
+                        textAlign = TextAlign.Center
                     )
 
+                    Spacer(modifier = Modifier.padding(top = 32.dp))
+
                     Box(
-                        modifier = Modifier.fillMaxWidth(0.4f),
+                        modifier = Modifier.fillMaxWidth(0.45f),
+                        contentAlignment = Alignment.BottomEnd
                     ){
+
                         Image(
-                            painter = painterResource(id = R.drawable.icon_add_photo),
+                            painter = painterResource(id = R.drawable.image_add_photo),
                             contentDescription = "image add photo"
                         )
+
+                        Box(
+                            modifier = Modifier.fillMaxWidth(0.4f),
+                        ){
+                            Image(
+                                painter = painterResource(id = R.drawable.icon_add_photo),
+                                contentDescription = "image add photo"
+                            )
+                        }
+
+                    }
+
+                    Spacer(modifier = Modifier.padding(top = 26.dp))
+
+                    TextInputStatic(text = "Артём",
+                        textHint = stringResource(id = R.string.text_name),
+                        onValueChange = {})
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    TextInputStatic(text = "Сокерин",
+                        textHint = stringResource(id = R.string.text_surname),
+                        onValueChange = {})
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    TextInputStatic(text = "11Н",
+                        textHint = stringResource(id = R.string.text_class),
+                        onValueChange = {})
+
+                    Spacer(modifier = Modifier.padding(top = 32.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_frequent_questions),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                            fontWeight = FontWeight(500),
+                            color = ColorTitle,
+                            letterSpacing = 0.18.sp,
+                        ),
+                        textAlign = TextAlign.Start
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    MoreInformationBlock(
+                        text = stringResource(id = R.string.text_frequent_questions_two),
+                        idPainter = iconItemTwo
+                    ) {
+                        clickItemTwo = !clickItemTwo
+                    }
+
+                    if (clickItemTwo){
+
+                        Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                        ItemMoreInformation(
+                            textTitle = stringResource(id = R.string.text_frequent_questions_two),
+                            textDescription = stringResource(id = R.string.text_frequent_questions_description_two)
+                        )
+
+                    }
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    MoreInformationBlock(
+                        text = stringResource(id = R.string.text_frequent_questions_one),
+                        idPainter = iconItemOne
+                    ) {
+                        clickItemOne = !clickItemOne
+                    }
+
+                    if (clickItemOne){
+
+                        Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                        ItemMoreInformation(
+                            textTitle = stringResource(id = R.string.text_full_out_profile),
+                            textDescription = stringResource(id = R.string.text_frequent_questions_description_one),
+                            isImage = true
+                        )
+
                     }
 
                 }
 
-                Spacer(modifier = Modifier.padding(top = 26.dp))
-
-                TextInputStatic(text = "Артём",
-                    textHint = stringResource(id = R.string.text_name),
-                    onValueChange = {})
-                
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                TextInputStatic(text = "Сокерин",
-                    textHint = stringResource(id = R.string.text_surname),
-                    onValueChange = {})
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                TextInputStatic(text = "11Н",
-                    textHint = stringResource(id = R.string.text_class),
-                    onValueChange = {})
-
-                Spacer(modifier = Modifier.padding(top = 32.dp))
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_frequent_questions),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-                        fontWeight = FontWeight(500),
-                        color = ColorTitle,
-                        letterSpacing = 0.18.sp,
-                    ),
-                    textAlign = TextAlign.Start
-                )
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                MoreInformationBlock(
-                    text = stringResource(id = R.string.text_frequent_questions_two),
-                    idPainter = iconItemTwo
-                ) {
-                    clickItemTwo = !clickItemTwo
-                }
-
-                if (clickItemTwo){
-
-                    Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                    ItemMoreInformation(
-                        textTitle = stringResource(id = R.string.text_frequent_questions_two),
-                        textDescription = stringResource(id = R.string.text_frequent_questions_description_two)
-                    )
-
-                }
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                MoreInformationBlock(
-                    text = stringResource(id = R.string.text_frequent_questions_one),
-                    idPainter = iconItemOne
-                ) {
-                    clickItemOne = !clickItemOne
-                }
-
-                if (clickItemOne){
-
-                    Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                    ItemMoreInformation(
-                        textTitle = stringResource(id = R.string.text_full_out_profile),
-                        textDescription = stringResource(id = R.string.text_frequent_questions_description_one),
-                        isImage = true
-                    )
-
-                }
+                Spacer(Modifier.padding(top = 25.dp))
 
             }
-
-            Spacer(Modifier.padding(top = 25.dp))
-
-        }else if (currentScreen.value == 2){
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-
-                Spacer(modifier = Modifier.padding(top = 13.dp))
-
-                Text(
+            2 -> {
+                Column(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_acquaintance),
-                    style = TextStyle(
-                        fontSize = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
-                        fontWeight = FontWeight(700),
-                        color = ColorTitle,
-                        letterSpacing = 0.24.sp,
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.padding(top = 32.dp))
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_contacts),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-                        fontWeight = FontWeight(500),
-                        color = ColorTitle,
-                        letterSpacing = 0.18.sp,
-                    ),
-                    textAlign = TextAlign.Start
-                )
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                InputTextEntry(
-                    text = phone.value,
-                    onValueChange = {
-                        phone.value = it
-                    },
-                    idText = R.string.text_phone_number,
-                    interactionSource = remember { MutableInteractionSource() }
-                        .also { interactionSource ->
-                            LaunchedEffect(interactionSource) {
-                                interactionSource.interactions.collect {
-                                    if (it is PressInteraction.Release) {
-
-                                    }
-                                }
-                            }
-                        }
-                )
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                InputTextEntry(
-                    text = email.value,
-                    onValueChange = {
-                        email.value = it
-                    },
-                    idText = R.string.text_email,
-                    interactionSource = remember { MutableInteractionSource() }
-                        .also { interactionSource ->
-                            LaunchedEffect(interactionSource) {
-                                interactionSource.interactions.collect {
-                                    if (it is PressInteraction.Release) {
-
-                                    }
-                                }
-                            }
-                        }
-                )
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                InputTextEntry(
-                    text = telegram.value,
-                    idText = R.string.text_telegram,
-                    onValueChange = {
-                        telegram.value = it
-                    },
-                    interactionSource = remember { MutableInteractionSource() }
-                        .also { interactionSource ->
-                            LaunchedEffect(interactionSource) {
-                                interactionSource.interactions.collect {
-                                    if (it is PressInteraction.Release) {
-
-                                    }
-                                }
-                            }
-                        }
-                )
-
-                Spacer(modifier = Modifier.padding(top = 17.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ){
 
-                    Checkbox(
-                        modifier = Modifier
-                            .width(24.dp)
-                            .height(24.dp),
-                        checked = checked.value,
-                        onCheckedChange = { checked_ ->
-                            checked.value = checked_
-                        },
-                        colors = CheckboxDefaults.colors(
-                            checkedColor = ColorCheckBox
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.padding(start = 8.dp))
+                    Spacer(modifier = Modifier.padding(top = 13.dp))
 
                     Text(
-                        text = stringResource(id = R.string.text_view_data_checkbox),
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_acquaintance),
                         style = TextStyle(
-                            fontSize = 18.sp,
-                            lineHeight = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-                            fontWeight = FontWeight(400),
-                            color = ColorTextHint,
-                        )
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                            fontWeight = FontWeight(700),
+                            color = ColorTitle,
+                            letterSpacing = 0.24.sp,
+                        ),
+                        textAlign = TextAlign.Center
                     )
 
-                }
-            }
+                    Spacer(modifier = Modifier.padding(top = 32.dp))
 
-            Spacer(Modifier.padding(top = 25.dp))
-
-        }else if (currentScreen.value == 3){
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Spacer(modifier = Modifier.padding(top = 13.dp))
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_acquaintance),
-                    style = TextStyle(
-                        fontSize = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
-                        fontWeight = FontWeight(700),
-                        color = ColorTitle,
-                        letterSpacing = 0.24.sp,
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.padding(top = 32.dp))
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_frequent_questions),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-                        fontWeight = FontWeight(500),
-                        color = ColorTitle,
-                        letterSpacing = 0.18.sp,
-                    ),
-                    textAlign = TextAlign.Start
-                )
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                MoreInformationBlock(
-                    text = stringResource(id = R.string.text_frequent_questions_three),
-                    idPainter = iconItemThree
-                ) {
-                    clickItemThree = !clickItemThree
-                }
-
-                if (clickItemThree){
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_contacts),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                            fontWeight = FontWeight(500),
+                            color = ColorTitle,
+                            letterSpacing = 0.18.sp,
+                        ),
+                        textAlign = TextAlign.Start
+                    )
 
                     Spacer(modifier = Modifier.padding(top = 8.dp))
 
-                    ItemMoreInformation(
-                        textTitle = stringResource(id = R.string.text_frequent_questions_three),
-                        textDescription = stringResource(id = R.string.text_frequent_questions_description_three)
-                    )
+                    InputTextEntry(
+                        text = phone.value,
+                        onValueChange = {
+                            phone.value = it
+                        },
+                        idText = R.string.text_phone_number,
+                        interactionSource = remember { MutableInteractionSource() }
+                            .also { interactionSource ->
+                                LaunchedEffect(interactionSource) {
+                                    interactionSource.interactions.collect {
+                                        if (it is PressInteraction.Release) {
 
-                }
-
-                Spacer(modifier = Modifier.padding(top = 32.dp))
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.text_about_me),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
-                        fontWeight = FontWeight(500),
-                        color = ColorTitle,
-                        letterSpacing = 0.18.sp,
-                    ),
-                    textAlign = TextAlign.Start
-                )
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                DropDownSpecializationProfile()
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                MultiLineInputTextEntry(
-                    text = aboutMe.value,
-                    idText = R.string.text_about_me,
-                    onValueChange = {
-                        aboutMe.value = it
-                    },
-                    interactionSource = remember { MutableInteractionSource() }
-                        .also { interactionSource ->
-                            LaunchedEffect(interactionSource) {
-                                interactionSource.interactions.collect {
-                                    if (it is PressInteraction.Release) {
-
+                                        }
                                     }
                                 }
                             }
-                        })
+                    )
 
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    InputTextEntry(
+                        text = email.value,
+                        onValueChange = {
+                            email.value = it
+                        },
+                        idText = R.string.text_email,
+                        interactionSource = remember { MutableInteractionSource() }
+                            .also { interactionSource ->
+                                LaunchedEffect(interactionSource) {
+                                    interactionSource.interactions.collect {
+                                        if (it is PressInteraction.Release) {
+
+                                        }
+                                    }
+                                }
+                            }
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    InputTextEntry(
+                        text = telegram.value,
+                        idText = R.string.text_telegram,
+                        onValueChange = {
+                            telegram.value = it
+                        },
+                        interactionSource = remember { MutableInteractionSource() }
+                            .also { interactionSource ->
+                                LaunchedEffect(interactionSource) {
+                                    interactionSource.interactions.collect {
+                                        if (it is PressInteraction.Release) {
+
+                                        }
+                                    }
+                                }
+                            }
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 17.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+
+                        Checkbox(
+                            modifier = Modifier
+                                .width(24.dp)
+                                .height(24.dp),
+                            checked = checked.value,
+                            onCheckedChange = { checked_ ->
+                                checked.value = checked_
+                            },
+                            colors = CheckboxDefaults.colors(
+                                checkedColor = ColorCheckBox
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.padding(start = 8.dp))
+
+                        Text(
+                            text = stringResource(id = R.string.text_view_data_checkbox),
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                lineHeight = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                                fontWeight = FontWeight(400),
+                                color = ColorTextHint,
+                            )
+                        )
+
+                    }
+                }
+
+                Spacer(Modifier.padding(top = 25.dp))
 
             }
+            3 -> {
 
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Spacer(modifier = Modifier.padding(top = 13.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_acquaintance),
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                            fontWeight = FontWeight(700),
+                            color = ColorTitle,
+                            letterSpacing = 0.24.sp,
+                        ),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 32.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_frequent_questions),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                            fontWeight = FontWeight(500),
+                            color = ColorTitle,
+                            letterSpacing = 0.18.sp,
+                        ),
+                        textAlign = TextAlign.Start
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    MoreInformationBlock(
+                        text = stringResource(id = R.string.text_frequent_questions_three),
+                        idPainter = iconItemThree
+                    ) {
+                        clickItemThree = !clickItemThree
+                    }
+
+                    if (clickItemThree){
+
+                        Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                        ItemMoreInformation(
+                            textTitle = stringResource(id = R.string.text_frequent_questions_three),
+                            textDescription = stringResource(id = R.string.text_frequent_questions_description_three)
+                        )
+
+                    }
+
+                    Spacer(modifier = Modifier.padding(top = 32.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.text_about_me),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                            fontWeight = FontWeight(500),
+                            color = ColorTitle,
+                            letterSpacing = 0.18.sp,
+                        ),
+                        textAlign = TextAlign.Start
+                    )
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    DropDownSpecializationProfile()
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                    MultiLineInputTextEntry(
+                        text = aboutMe.value,
+                        idText = R.string.text_about_me,
+                        onValueChange = {
+                            aboutMe.value = it
+                        },
+                        interactionSource = remember { MutableInteractionSource() }
+                            .also { interactionSource ->
+                                LaunchedEffect(interactionSource) {
+                                    interactionSource.interactions.collect {
+                                        if (it is PressInteraction.Release) {
+
+                                        }
+                                    }
+                                }
+                            })
+
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+
+                }
+
+            }
         }
 
         Column(
