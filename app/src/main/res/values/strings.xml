@@ -28,6 +28,7 @@
     <string name="text_view_data_checkbox">Показывать данные для связи</string>
     <string name="text_specialization">Специальность</string>
     <string name="text_specialists">Специалисты</string>
+    <string name="text_specialist">Специалист</string>
     <string name="text_hello">Привет!</string>
     <string name="text_description_before_test">Нам нужно немного познакомится, что бы было удобнее пользоваться сервисом</string>
     <string name="text_go_to_test">Тест · 5 минут</string>
