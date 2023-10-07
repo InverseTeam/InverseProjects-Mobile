@@ -103,13 +103,6 @@ fun BeforeTestScreen(
                 navigator.popBackStack()
                 navigator.navigate(CreateProfileScreenDestination)
             }
-            
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-
-            ButtonForSkip(text = stringResource(id = R.string.text_skip)) {
-                navigator.popBackStack()
-                navigator.navigate(BottomMenuScreenDestination)
-            }
 
         }
 

@@ -1,6 +1,10 @@
 package ramble.sokol.inversesesc.authentication_and_splash.view.screens
 
 import DropDownSpecializationProfile
+import android.content.Context
+import android.media.session.MediaSession.Token
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -31,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -40,11 +45,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.gson.JsonObject
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
+import ramble.sokol.inversesesc.authentication_and_splash.model.models.ResponseAuth
+import ramble.sokol.inversesesc.authentication_and_splash.model.models.ResponseInfoTest
+import ramble.sokol.inversesesc.authentication_and_splash.model.utils.APIauth
 import ramble.sokol.inversesesc.authentication_and_splash.view.components.ButtonForEntry
 import ramble.sokol.inversesesc.destinations.AfterTestScreenDestination
+import ramble.sokol.inversesesc.destinations.BeforeTestScreenDestination
+import ramble.sokol.inversesesc.model_project.RetrofitHelper
+import ramble.sokol.inversesesc.model_project.TokenManager
 import ramble.sokol.inversesesc.profile.view.components.ItemMoreInformation
 import ramble.sokol.inversesesc.profile.view.components.MoreInformationBlock
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
@@ -56,6 +68,9 @@ import ramble.sokol.inversesesc.ui.theme.ColorTitle
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.InputTextEntry
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.MultiLineInputTextEntry
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.TextInputStatic
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 lateinit var currentScreen: MutableState<Int>
 private lateinit var email: MutableState<String>
@@ -63,6 +78,11 @@ private lateinit var telegram: MutableState<String>
 private lateinit var checked: MutableState<Boolean>
 private lateinit var aboutMe: MutableState<String>
 private lateinit var phone: MutableState<String>
+private lateinit var firstname: MutableState<String>
+private lateinit var lastname: MutableState<String>
+private lateinit var userClass: MutableState<String>
+private lateinit var apiAuth: APIauth
+private lateinit var tokenManager: TokenManager
 
 @Destination
 @Composable
@@ -70,9 +90,15 @@ fun CreateProfileScreen(
     navigator: DestinationsNavigator
 ){
 
+    val context = LocalContext.current
+
+    tokenManager = TokenManager(context)
+
     currentScreen = remember {
         mutableIntStateOf(1)
     }
+
+    apiAuth = RetrofitHelper.getInstance().create(APIauth::class.java)
 
     var clickItemOne by remember {
         mutableStateOf(false)
@@ -124,6 +150,20 @@ fun CreateProfileScreen(
     phone = remember {
         mutableStateOf("")
     }
+
+    firstname = remember {
+        mutableStateOf("")
+    }
+
+    lastname = remember {
+        mutableStateOf("")
+    }
+
+    userClass = remember {
+        mutableStateOf("")
+    }
+
+    getInfoData(context)
 
     Column(
         modifier = Modifier
@@ -184,19 +224,19 @@ fun CreateProfileScreen(
 
                     Spacer(modifier = Modifier.padding(top = 26.dp))
 
-                    TextInputStatic(text = "Артём",
+                    TextInputStatic(text = firstname.value,
                         textHint = stringResource(id = R.string.text_name),
                         onValueChange = {})
 
                     Spacer(modifier = Modifier.padding(top = 8.dp))
 
-                    TextInputStatic(text = "Сокерин",
+                    TextInputStatic(text = lastname.value,
                         textHint = stringResource(id = R.string.text_surname),
                         onValueChange = {})
 
                     Spacer(modifier = Modifier.padding(top = 8.dp))
 
-                    TextInputStatic(text = "11Н",
+                    TextInputStatic(text = userClass.value,
                         textHint = stringResource(id = R.string.text_class),
                         onValueChange = {})
 
@@ -558,5 +598,34 @@ fun CreateProfileScreen(
         }
 
     }
+
+}
+
+fun getInfoData(context: Context) {
+
+    val token = tokenManager.getToken()
+
+    val call = apiAuth.getInfoForTest("Token $token")
+
+    call.enqueue(object : Callback<List<ResponseInfoTest>> {
+        override fun onResponse(call: Call<List<ResponseInfoTest>>, response: Response<List<ResponseInfoTest>>) {
+            if (response.isSuccessful) {
+
+                val responseBody = response.body()
+                firstname.value = responseBody?.get(0)!!.firstname
+                lastname.value = responseBody[0].lastname
+                userClass.value = "${responseBody[0].schoolClass.number}${responseBody[0].schoolClass.litera}"
+            } else {
+                // что то должно быть
+            }
+        }
+
+        override fun onFailure(call: Call<List<ResponseInfoTest>>, t: Throwable) {
+            Toast.makeText(context, R.string.text_toast_no_internet, Toast.LENGTH_SHORT).show()
+            Log.d("MyLog", t.message.toString())
+        }
+    })
+
+
 
 }
