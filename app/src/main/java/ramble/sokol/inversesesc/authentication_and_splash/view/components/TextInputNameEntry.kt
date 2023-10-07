@@ -65,9 +65,9 @@ fun TextInputNameEntry(
                 stringResource(id = R.string.text_login_user),
                 style = TextStyle(
                     color = ColorTextHint,
-                    fontFamily = FontFamily(Font(R.font.lab_grotesque_regular)),
-                    lineHeight = 24.sp,
-                    fontWeight = FontWeight(700)
+                    fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                    lineHeight = 15.6.sp,
+                    fontWeight = FontWeight(500),
                 )
             ) },
         colors = TextFieldDefaults.textFieldColors(

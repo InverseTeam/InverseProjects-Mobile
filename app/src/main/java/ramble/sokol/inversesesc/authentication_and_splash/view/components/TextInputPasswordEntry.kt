@@ -55,7 +55,7 @@ fun TextInputPasswordEntry(
         textStyle = TextStyle(
             fontSize = 16.sp,
             lineHeight = 24.sp,
-            fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+            fontFamily = FontFamily(Font(R.font.lab_grotesque_regular)),
             fontWeight = FontWeight(700),
             color = ColorTextInput,
         ),
@@ -66,7 +66,9 @@ fun TextInputPasswordEntry(
                 stringResource(id = R.string.text_password),
                 style = TextStyle(
                     color = ColorTextHint,
-                    fontFamily = FontFamily(Font(R.font.lab_grotesque_medium))
+                    fontFamily = FontFamily(Font(R.font.lab_grotesque_medium)),
+                    lineHeight = 15.6.sp,
+                    fontWeight = FontWeight(500),
                 )
             ) },
         colors = TextFieldDefaults.textFieldColors(
