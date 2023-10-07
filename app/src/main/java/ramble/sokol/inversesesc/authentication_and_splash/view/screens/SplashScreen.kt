@@ -22,19 +22,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.delay
 import ramble.sokol.inversesesc.R
+import ramble.sokol.inversesesc.destinations.BeforeTestScreenDestination
+import ramble.sokol.inversesesc.destinations.BottomMenuScreenDestination
 import ramble.sokol.inversesesc.destinations.LoginScreenDestination
+import ramble.sokol.inversesesc.model_project.FirstEntryManager
+
+private lateinit var firstEntryManager: FirstEntryManager
 
 @Destination(start = true)
 @Composable
 fun SplashScreen(
     navigator: DestinationsNavigator
 ) {
+
+    val context = LocalContext.current
+    firstEntryManager = FirstEntryManager(context)
+
     val transition = rememberInfiniteTransition(label = "")
     val alpha by transition.animateFloat(
         initialValue = 0f,
@@ -61,8 +71,16 @@ fun SplashScreen(
         key1 = true
     ) {
         delay(4000L)
-        navigator.popBackStack()
-        navigator.navigate(LoginScreenDestination)
+        if (firstEntryManager.getFirstEntry() == true && firstEntryManager.getFirstTest() == true){
+            navigator.popBackStack()
+            navigator.navigate(BottomMenuScreenDestination)
+        }else if(firstEntryManager.getFirstEntry() == false) {
+            navigator.popBackStack()
+            navigator.navigate(LoginScreenDestination)
+        }else{
+            navigator.popBackStack()
+            navigator.navigate(BeforeTestScreenDestination)
+        }
     }
 
     Box (modifier = Modifier.fillMaxSize()){

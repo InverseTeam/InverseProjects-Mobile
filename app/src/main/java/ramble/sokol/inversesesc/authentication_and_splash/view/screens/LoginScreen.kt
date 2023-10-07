@@ -281,8 +281,7 @@ private fun entry(context: Context, navigator: DestinationsNavigator, email: Str
 
                 val responseBody = response.body()
                 tokenManager.saveToken(responseBody!!.authToken)
-                //firstEntryManager.saveFirstEntry(true)
-                //firstEntryManager.saveFirstTest(true)
+                firstEntryManager.saveFirstEntry(true)
                 progressEntryState.value = false
                 Toast.makeText(context, R.string.text_successful_entry, Toast.LENGTH_SHORT).show()
                 navigator.popBackStack()
