@@ -625,7 +625,4 @@ fun getInfoData(context: Context) {
             Log.d("MyLog", t.message.toString())
         }
     })
-
-
-
 }

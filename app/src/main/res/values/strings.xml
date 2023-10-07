@@ -45,4 +45,5 @@
     <string name="text_incorrect_data_entry">Неверный логин или пароль</string>
     <string name="text_successful_entry">Вы успешно вошли</string>
     <string name="text_toast_no_internet">Проверьте подключение к интернету</string>
+    <string name="text_error_request_profile">Возникла ошибка, попробуйте еще раз</string>
 </resources>
