@@ -12,6 +12,7 @@
     <string name="text_frequent_questions_three">А если я еще не знаю, чем хочу заниматься?</string>
     <string name="text_general_information">Общая информация</string>
     <string name="text_contacts">Контакты</string>
+    <string name="text_invite">Пригласить</string>
     <string name="text_about_me">О себе</string>
     <string name="text_experience_in_projects">Опыт в проектах</string>
     <string name="text_frequent_questions_description_two">Данные о тебе помогут другим людям быстрее принимать решения о работе с тобой, а также помогут нам подбирать подходящие тебе проекты</string>
@@ -43,6 +44,7 @@
     <string name="text_all_projects">Все проекты</string>
     <string name="text_my_projects">Мои проекты</string>
     <string name="text_incorrect_data_entry">Неверный логин или пароль</string>
+    <string name="text_not_add_photo">Добавьте фотографию</string>
     <string name="text_successful_entry">Вы успешно вошли</string>
     <string name="text_toast_no_internet">Проверьте подключение к интернету</string>
     <string name="text_error_request_profile">Возникла ошибка, попробуйте еще раз</string>

@@ -2,6 +2,7 @@ package ramble.sokol.inversesesc.projects.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,8 +23,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -50,11 +54,17 @@ import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
 import ramble.sokol.inversesesc.ui.theme.ColorTextSpec
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
 
+private lateinit var selectedState: MutableState<Int>
+
 @Destination
 @Composable
 fun ProjectsScreen(
     navigator: DestinationsNavigator
 ){
+
+    selectedState = remember {
+        mutableIntStateOf(0)
+    }
 
     Column(
         modifier = Modifier
@@ -75,7 +85,7 @@ fun ProjectsScreen(
                 color = ColorTitle,
                 letterSpacing = 0.24.sp,
             ),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Start
         )
 
         Spacer(modifier = Modifier.padding(top = 17.dp))
@@ -87,85 +97,69 @@ fun ProjectsScreen(
         ) {
 
             Box (
-                modifier = Modifier.fillMaxWidth(0.4f),
-                contentAlignment = Alignment.CenterStart
-            ){
-
-                Box(modifier = Modifier
+                modifier = Modifier
+                    .weight(0.5f)
                     .background(
-                        color = ColorBackgroundButton,
+                        color = if (selectedState.value == 0) ColorBackgroundButton else ColorBackgroundTextField,
                         shape = RoundedCornerShape(size = 15.dp)
                     )
-                    .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 12.dp)){
-
-                    Text(
-                        text = stringResource(id = R.string.text_all_projects),
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            lineHeight = 15.4.sp,
-                            fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
-                            fontWeight = FontWeight(700),
-                            color = White,
-                        )
-                    )
-
-                }
-
-            }
-
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-
-            Box (
-                modifier = Modifier.fillMaxWidth(0.4f),
-                contentAlignment = Alignment.CenterStart
-                ){
-
-                Box(
-                    modifier = Modifier
-                        .background(
-                            color = ColorBackgroundTextField,
-                            shape = RoundedCornerShape(size = 15.dp)
-                        )
-                        .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 12.dp)
-                ){
-
-                    Text(
-                        text = stringResource(id = R.string.text_my_projects),
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            lineHeight = 15.4.sp,
-                            fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
-                            fontWeight = FontWeight(700),
-                            color = ColorTextSpec,
-                        )
-                    )
-
-                }
-
-            }
-
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-
-            Box (
-                modifier = Modifier.fillMaxWidth(0.2f),
+                    .padding(start = 16.dp, top = 15.dp, end = 16.dp, bottom = 15.dp)
+                    .clickable {
+                        selectedState.value = 0
+                    },
                 contentAlignment = Alignment.CenterStart
             ){
-
-                Box(modifier = Modifier
-                    .background(color = ColorBackgroundTextField, shape = RoundedCornerShape(size = 15.dp))
-                    .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 12.dp)
-                ){
-
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        painter = painterResource(id = R.drawable.icon_favorite),
-                        contentDescription = "icon_favorite"
-                    )
-
-                }
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_all_projects),
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 15.4.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                        fontWeight = FontWeight(700),
+                        color = if (selectedState.value == 0) White else ColorTextSpec,
+                    ),
+                    textAlign = TextAlign.Center
+                )
 
             }
+
+            Spacer(modifier = Modifier.padding(start = 8.dp))
+
+            Box (
+                modifier = Modifier
+                    .weight(0.5f)
+                    .background(
+                        color = if (selectedState.value == 1) ColorBackgroundButton else ColorBackgroundTextField,
+                        shape = RoundedCornerShape(size = 15.dp)
+                    )
+                    .padding(start = 16.dp, top = 15.dp, end = 16.dp, bottom = 15.dp)
+                    .clickable {
+                        selectedState.value = 1
+                    },
+                contentAlignment = Alignment.CenterStart
+                ){
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.text_my_projects),
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 15.4.sp,
+                        fontFamily = FontFamily(Font(R.font.lab_grotesque_bold)),
+                        fontWeight = FontWeight(700),
+                        color = if (selectedState.value == 1) White else ColorTextSpec,
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+            }
+        }
+
+        if (selectedState.value == 0){
+
+        }else{
+
         }
 
     }

@@ -3,10 +3,16 @@ package ramble.sokol.inversesesc.authentication_and_splash.view.screens
 import DropDownSpecializationProfile
 import android.content.Context
 import android.media.session.MediaSession.Token
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
@@ -45,6 +51,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.google.gson.JsonObject
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -63,6 +71,7 @@ import ramble.sokol.inversesesc.ui.theme.ColorBackgroundButton
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundTextField
 import ramble.sokol.inversesesc.ui.theme.ColorCheckBox
 import ramble.sokol.inversesesc.ui.theme.ColorDescriptionText
+import ramble.sokol.inversesesc.ui.theme.ColorError
 import ramble.sokol.inversesesc.ui.theme.ColorTextHint
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
 import ramble.sokol.sberafisha.authentication_and_splash.view.components.InputTextEntry
@@ -83,6 +92,8 @@ private lateinit var lastname: MutableState<String>
 private lateinit var userClass: MutableState<String>
 private lateinit var apiAuth: APIauth
 private lateinit var tokenManager: TokenManager
+private lateinit var selectedImageUri: MutableState<Uri?>
+private lateinit var notPickPhoto: MutableState<Boolean>
 
 @Destination
 @Composable
@@ -99,6 +110,10 @@ fun CreateProfileScreen(
     }
 
     apiAuth = RetrofitHelper.getInstance().create(APIauth::class.java)
+
+    selectedImageUri = remember {
+        mutableStateOf(null)
+    }
 
     var clickItemOne by remember {
         mutableStateOf(false)
@@ -130,6 +145,14 @@ fun CreateProfileScreen(
         else
             R.drawable.icon_plus
 
+    notPickPhoto = remember {
+        mutableStateOf(false)
+    }
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> selectedImageUri.value = uri }
+    )
 
     email = remember {
         mutableStateOf("")
@@ -207,7 +230,16 @@ fun CreateProfileScreen(
                     ){
 
                         Image(
-                            painter = painterResource(id = R.drawable.image_add_photo),
+                            modifier = Modifier.fillMaxWidth(),
+                            painter = if (selectedImageUri.value == null)
+                                painterResource(id = R.drawable.image_add_photo)
+                            else
+                                rememberAsyncImagePainter(
+                                    ImageRequest
+                                        .Builder(context)
+                                        .data(data = selectedImageUri.value)
+                                        .build()
+                                ),
                             contentDescription = "image add photo"
                         )
 
@@ -215,11 +247,38 @@ fun CreateProfileScreen(
                             modifier = Modifier.fillMaxWidth(0.4f),
                         ){
                             Image(
+                                modifier = Modifier.clickable {
+                                    notPickPhoto.value = false
+                                    photoPickerLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
+                                },
                                 painter = painterResource(id = R.drawable.icon_add_photo),
                                 contentDescription = "image add photo"
                             )
                         }
 
+                    }
+
+                    if (notPickPhoto.value){
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp),
+                            contentAlignment = Alignment.Center
+                            ){
+
+                            Text(
+                                text = stringResource(id = R.string.text_not_add_photo),
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    lineHeight = 16.sp,
+                                    fontFamily = FontFamily(Font(R.font.lab_grotesque_regular)),
+                                    fontWeight = FontWeight(400),
+                                    color = ColorError,
+                                    textAlign = TextAlign.Center,
+                                )
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.padding(top = 26.dp))
@@ -592,7 +651,11 @@ fun CreateProfileScreen(
                     navigator.popBackStack()
                     navigator.navigate(AfterTestScreenDestination)
                 }
-                currentScreen.value++
+                if (selectedImageUri.value == null){
+                    notPickPhoto.value = true
+                }else{
+                    currentScreen.value++
+                }
             }
 
         }
@@ -607,20 +670,20 @@ fun getInfoData(context: Context) {
 
     val call = apiAuth.getInfoForTest("Token $token")
 
-    call.enqueue(object : Callback<List<ResponseInfoTest>> {
-        override fun onResponse(call: Call<List<ResponseInfoTest>>, response: Response<List<ResponseInfoTest>>) {
+    call.enqueue(object : Callback<ResponseInfoTest> {
+        override fun onResponse(call: Call<ResponseInfoTest>, response: Response<ResponseInfoTest>) {
             if (response.isSuccessful) {
 
                 val responseBody = response.body()
-                firstname.value = responseBody?.get(0)!!.firstname
-                lastname.value = responseBody[0].lastname
-                userClass.value = "${responseBody[0].schoolClass.number}${responseBody[0].schoolClass.litera}"
+                firstname.value = responseBody!!.firstname
+                lastname.value = responseBody.lastname
+                userClass.value = "${responseBody.schoolClass.number}${responseBody.schoolClass.litera}"
             } else {
                 // что то должно быть
             }
         }
 
-        override fun onFailure(call: Call<List<ResponseInfoTest>>, t: Throwable) {
+        override fun onFailure(call: Call<ResponseInfoTest>, t: Throwable) {
             Toast.makeText(context, R.string.text_toast_no_internet, Toast.LENGTH_SHORT).show()
             Log.d("MyLog", t.message.toString())
         }

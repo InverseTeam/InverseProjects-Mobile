@@ -1,5 +1,6 @@
 package ramble.sokol.inversesesc.specialists.view.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ramble.sokol.inversesesc.R
+import ramble.sokol.inversesesc.destinations.ProfileScreenDestination
 import ramble.sokol.inversesesc.specialists.view.components.ItemSpecialistsCard
 import ramble.sokol.inversesesc.ui.theme.ColorTitle
 
@@ -57,7 +59,9 @@ fun SpecialistsScreen(
 
         Spacer(modifier = Modifier.padding(top = 32.dp))
         
-        ItemSpecialistsCard()
+        ItemSpecialistsCard(){
+
+        }
 
     }
 

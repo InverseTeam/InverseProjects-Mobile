@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -19,13 +20,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ramble.sokol.inversesesc.R
+import ramble.sokol.inversesesc.profile.view.components.ButtonForContactsProfile
 import ramble.sokol.inversesesc.ui.theme.ColorBackgroundTextField
 import ramble.sokol.inversesesc.ui.theme.ColorBoldText
 import ramble.sokol.inversesesc.ui.theme.ColorTextHint
 import ramble.sokol.inversesesc.ui.theme.ColorTextSpec
 
 @Composable
-fun ItemSpecialistsCard(){
+fun ItemSpecialistsCard(
+    onClick: () -> Unit
+){
 
     Box (
         modifier = Modifier
@@ -78,17 +82,21 @@ fun ItemSpecialistsCard(){
                 )
             )
             
-            Spacer(modifier = Modifier.padding(top = 28.dp))
+            Spacer(modifier = Modifier.padding(top = 20.dp))
 
-            // list of skills
-            
-            Spacer(modifier = Modifier.padding(top = 8.dp))
+//            list of skills
+//
+//            Spacer(modifier = Modifier.padding(top = 8.dp))
+//
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                verticalAlignment = Alignment.CenterVertically
+//                ) {
+//
+//            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-                ) {
-
+            ButtonForContactsProfile(text = stringResource(id = R.string.text_invite)) {
+                onClick()
             }
 
         }

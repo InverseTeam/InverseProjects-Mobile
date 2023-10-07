@@ -14,7 +14,7 @@ interface APIauth {
     @POST("users/auth/token/login/")
     fun getToken(@Body body: JsonObject): Call<ResponseAuth>
 
-    @GET("users/auth/users")
-    fun getInfoForTest(@Header("Authorization") token: String): Call<List<ResponseInfoTest>>
+    @GET("users/auth/users/me/")
+    fun getInfoForTest(@Header("Authorization") token: String): Call<ResponseInfoTest>
 
 }
